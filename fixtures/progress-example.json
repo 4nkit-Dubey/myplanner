@@ -1,0 +1,22 @@
+{
+  "progressVersion": "1.0.0",
+  "planId": "study-plan",
+  "sourceFingerprint": "fnv1a-78c4a10b",
+  "createdAt": "2026-01-01T08:00:00Z",
+  "occurrences": {
+    "read-chapter@2026-01-01": {
+      "status": "completed",
+      "completedAt": "2026-01-01T10:00:00Z",
+      "note": "Chapter 1 finished"
+    }
+  },
+  "measurements": {
+    "read-chapter": [
+      { "value": 1, "at": "2026-01-01T10:00:00Z" }
+    ]
+  },
+  "checkpointSnapshots": {},
+  "importHistory": [
+    { "fingerprint": "fnv1a-78c4a10b", "importedAt": "2026-01-01T08:00:00Z", "action": "created" }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://myplanner.example/schemas/plan-1.0.0.schema.json",
+  "title": "MyPlanner Universal Plan Schema",
+  "description": "Standard data contract for AI-generated planner files. Progress is maintained separately by the application.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["metadata", "plan", "goals", "tasks", "schedule", "weeklyCheckpoints", "dailyCheckpoints", "dependencies"],
+  "properties": {
+    "metadata": { "$ref": "#/$defs/metadata" },
+    "plan": { "$ref": "#/$defs/plan" },
+    "goals": { "type": "array", "items": { "$ref": "#/$defs/goal" } },
+    "tasks": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/task" } },
+    "schedule": { "type": "object", "additionalProperties": false, "required": ["entries"], "properties": { "entries": { "type": "array", "items": { "$ref": "#/$defs/scheduleEntry" } } } },
+    "weeklyCheckpoints": { "type": "array", "items": { "$ref": "#/$defs/weeklyCheckpoint" } },
+    "dailyCheckpoints": { "type": "array", "items": { "$ref": "#/$defs/dailyCheckpoint" } },
+    "dependencies": { "type": "array", "items": { "$ref": "#/$defs/dependency" } }
+  },
+  "$defs": {
+    "id": { "type": "string", "minLength": 1, "maxLength": 100, "pattern": "^[a-zA-Z0-9_-]+$" },
+    "date": { "type": "string", "format": "date" },
+    "time": { "type": "string", "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$" },
+    "metadata": { "type": "object", "additionalProperties": false, "required": ["app", "schemaVersion", "documentType", "exportedAt"], "properties": { "app": { "const": "MyPlanner" }, "schemaVersion": { "const": "1.0.0" }, "documentType": { "const": "planner-plan" }, "exportedAt": { "type": "string", "format": "date-time" } } },
+    "plan": { "type": "object", "additionalProperties": false, "required": ["id", "title", "startDate", "endDate", "timezone"], "properties": { "id": { "$ref": "#/$defs/id" }, "title": { "type": "string", "minLength": 1, "maxLength": 150 }, "description": { "type": "string", "maxLength": 2000 }, "startDate": { "$ref": "#/$defs/date" }, "endDate": { "$ref": "#/$defs/date" }, "timezone": { "type": "string", "minLength": 1 } } },
+    "goal": { "type": "object", "additionalProperties": false, "required": ["id", "title", "priority", "targetDate"], "properties": { "id": { "$ref": "#/$defs/id" }, "title": { "type": "string", "minLength": 1 }, "description": { "type": "string" }, "priority": { "enum": ["low", "medium", "high"] }, "targetDate": { "$ref": "#/$defs/date" } } },
+    "task": { "type": "object", "additionalProperties": false, "required": ["id", "title", "description", "category", "goalIds", "priority", "taskType", "scheduleType", "durationMinutes", "startDate", "endDate"], "properties": { "id": { "$ref": "#/$defs/id" }, "title": { "type": "string", "minLength": 1, "maxLength": 200 }, "description": { "type": "string" }, "category": { "type": "string", "minLength": 1 }, "goalIds": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/id" } }, "priority": { "enum": ["low", "medium", "high"] }, "taskType": { "enum": ["one_time", "recurring"] }, "scheduleType": { "enum": ["fixed", "flexible"] }, "durationMinutes": { "type": "integer", "minimum": 1 }, "startDate": { "$ref": "#/$defs/date" }, "endDate": { "$ref": "#/$defs/date" }, "recurrence": { "$ref": "#/$defs/recurrence" }, "measurement": { "$ref": "#/$defs/measurement" } }, "allOf": [{ "if": { "properties": { "taskType": { "const": "recurring" } }, "required": ["taskType"] }, "then": { "required": ["recurrence"] }, "else": { "not": { "required": ["recurrence"] } } }] },
+    "recurrence": { "type": "object", "additionalProperties": false, "required": ["frequency", "interval"], "properties": { "frequency": { "enum": ["daily", "weekly", "monthly"] }, "interval": { "type": "integer", "minimum": 1 }, "daysOfWeek": { "type": "array", "uniqueItems": true, "minItems": 1, "items": { "enum": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"] } }, "dayOfMonth": { "type": "integer", "minimum": 1, "maximum": 31 } }, "allOf": [{ "if": { "properties": { "frequency": { "const": "weekly" } }, "required": ["frequency"] }, "then": { "required": ["daysOfWeek"] } }, { "if": { "properties": { "frequency": { "const": "monthly" } }, "required": ["frequency"] }, "then": { "required": ["dayOfMonth"] } }] },
+    "measurement": { "type": "object", "additionalProperties": false, "required": ["targetValue", "unit"], "properties": { "targetValue": { "type": "number", "exclusiveMinimum": 0 }, "unit": { "type": "string", "minLength": 1 } } },
+    "scheduleEntry": { "type": "object", "additionalProperties": false, "required": ["id", "taskId", "date", "type"], "properties": { "id": { "$ref": "#/$defs/id" }, "taskId": { "$ref": "#/$defs/id" }, "date": { "$ref": "#/$defs/date" }, "type": { "enum": ["fixed", "flexible"] }, "startTime": { "$ref": "#/$defs/time" }, "endTime": { "$ref": "#/$defs/time" }, "durationMinutes": { "type": "integer", "minimum": 1 }, "objective": { "type": "string" } }, "allOf": [{ "if": { "properties": { "type": { "const": "fixed" } }, "required": ["type"] }, "then": { "required": ["startTime", "endTime"], "not": { "required": ["durationMinutes"] } }, "else": { "required": ["durationMinutes"], "not": { "anyOf": [{ "required": ["startTime"] }, { "required": ["endTime"] }] } } }] },
+    "checkpointTarget": { "type": "object", "additionalProperties": false, "required": ["id", "taskId", "description", "targetValue", "unit"], "properties": { "id": { "$ref": "#/$defs/id" }, "taskId": { "$ref": "#/$defs/id" }, "description": { "type": "string", "minLength": 1 }, "targetValue": { "type": "number", "exclusiveMinimum": 0 }, "unit": { "type": "string", "minLength": 1 } } },
+    "weeklyCheckpoint": { "type": "object", "additionalProperties": false, "required": ["id", "title", "startDate", "endDate", "targets"], "properties": { "id": { "$ref": "#/$defs/id" }, "title": { "type": "string", "minLength": 1 }, "startDate": { "$ref": "#/$defs/date" }, "endDate": { "$ref": "#/$defs/date" }, "targets": { "type": "array", "items": { "$ref": "#/$defs/checkpointTarget" } } } },
+    "dailyCheckpoint": { "type": "object", "additionalProperties": false, "required": ["id", "date", "targets"], "properties": { "id": { "$ref": "#/$defs/id" }, "date": { "$ref": "#/$defs/date" }, "targets": { "type": "array", "items": { "$ref": "#/$defs/checkpointTarget" } } } },
+    "dependency": { "type": "object", "additionalProperties": false, "required": ["taskId", "dependsOn"], "properties": { "taskId": { "$ref": "#/$defs/id" }, "dependsOn": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } } } }
+  }
+}

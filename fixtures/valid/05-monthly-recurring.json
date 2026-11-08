@@ -1,0 +1,94 @@
+{
+  "metadata": {
+    "app": "MyPlanner",
+    "schemaVersion": "1.0.0",
+    "documentType": "planner-plan",
+    "exportedAt": "2026-11-08T10:00:00Z"
+  },
+  "plan": {
+    "id": "plan-1",
+    "title": "November learning plan",
+    "startDate": "2026-11-01",
+    "endDate": "2026-11-30",
+    "timezone": "Asia/Calcutta"
+  },
+  "goals": [
+    {
+      "id": "goal-1",
+      "title": "Improve programming skills",
+      "priority": "high",
+      "targetDate": "2026-11-30"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "task-1",
+      "title": "Study algorithms",
+      "description": "Work through lessons",
+      "category": "Learning",
+      "goalIds": [
+        "goal-1"
+      ],
+      "priority": "high",
+      "taskType": "recurring",
+      "scheduleType": "fixed",
+      "durationMinutes": 60,
+      "startDate": "2026-11-08",
+      "endDate": "2026-11-08",
+      "recurrence": {
+        "frequency": "monthly",
+        "interval": 1,
+        "dayOfMonth": 15
+      },
+      "measurement": {
+        "targetValue": 12,
+        "unit": "chapters"
+      }
+    }
+  ],
+  "schedule": {
+    "entries": [
+      {
+        "id": "entry-1",
+        "taskId": "task-1",
+        "date": "2026-11-08",
+        "type": "fixed",
+        "startTime": "09:00",
+        "endTime": "10:00"
+      }
+    ]
+  },
+  "weeklyCheckpoints": [
+    {
+      "id": "week-1",
+      "title": "Week 1",
+      "startDate": "2026-11-01",
+      "endDate": "2026-11-07",
+      "targets": [
+        {
+          "id": "wt-1",
+          "taskId": "task-1",
+          "description": "Complete lessons",
+          "targetValue": 3,
+          "unit": "lessons"
+        }
+      ]
+    }
+  ],
+  "dailyCheckpoints": [
+    {
+      "id": "day-1",
+      "date": "2026-11-08",
+      "targets": [
+        {
+          "id": "dt-1",
+          "taskId": "task-1",
+          "description": "Study one hour",
+          "targetValue": 1,
+          "unit": "session"
+        }
+      ]
+    }
+  ],
+  "dependencies": []
+}

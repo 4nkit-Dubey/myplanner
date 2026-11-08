@@ -1,0 +1,8 @@
+{
+  "name": "myplanner-pre-master-foundation",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "node test/run-tests.mjs && node --test test/phases.test.mjs" },
+  "devDependencies": { "ajv": "^8.17.1", "ajv-formats": "^3.0.1" }
+}

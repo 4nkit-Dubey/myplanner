@@ -1,0 +1,10 @@
+import Ajv2020 from 'ajv/dist/2020.js';
+import addFormats from 'ajv-formats';
+import schema from '../schema/plan.schema.json' with { type: 'json' };
+import { validateSemantics } from './semantic.js';
+export function validatePlan(input) { const ajv=new Ajv2020({allErrors:true}); addFormats(ajv); const ok=ajv.validate(schema,input); const semantic=ok?validateSemantics(input):{valid:false,errors:[]}; return {valid:!!ok&&semantic.valid,structuralErrors:ajv.errors||[],semanticErrors:semantic.errors}; }
+export function previewImport(input) { const result=validatePlan(input); return {valid:result.valid,planId:input?.plan?.id||null,title:input?.plan?.title||null,taskCount:input?.tasks?.length||0,goalCount:input?.goals?.length||0,errors:[...result.structuralErrors,...result.semanticErrors]}; }
+export function exportPlan(plan) { const result=validatePlan(plan); if(!result.valid) throw new Error(`cannot export invalid plan: ${JSON.stringify(result)}`); return JSON.stringify(plan,null,2); }
+export function safeImportJson(text) { let value; try { value=JSON.parse(text); } catch(e) { return {ok:false,error:{code:'INVALID_JSON',message:e.message}}; } const preview=previewImport(value); return preview.valid?{ok:true,value,preview}:{ok:false,error:{code:'PLAN_INVALID',preview}}; }
+export function persistPlan(storage, plan, progress) { const result=validatePlan(plan); if(!result.valid) throw new Error('refusing to persist invalid plan'); const key=`myplanner:${plan.plan.id}`; const old=storage.getItem(key); try { if(old) storage.setItem(`${key}:backup`,old); storage.setItem(key,JSON.stringify({plan,progress})); } catch(e) { if(old!==null) storage.setItem(key,old); throw new Error(`persistence failed; previous copy restored when possible: ${e.message}`); } }
+export function restoreBackup(storage, planId) { const backup=storage.getItem(`myplanner:${planId}:backup`); if(!backup) throw new Error('no backup found'); const parsed=JSON.parse(backup); if(parsed.plan?.plan?.id!==planId||!validatePlan(parsed.plan).valid) throw new Error('backup failed plan validation'); storage.setItem(`myplanner:${planId}`,backup); return parsed; }

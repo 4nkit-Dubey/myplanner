@@ -1,0 +1,15 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://myplanner.example/schemas/progress-1.0.0.schema.json",
+  "title":"MyPlanner App-owned Progress",
+  "type":"object","additionalProperties":false,
+  "required":["progressVersion","planId","sourceFingerprint","createdAt","occurrences","measurements","checkpointSnapshots","importHistory"],
+  "properties":{
+    "progressVersion":{"const":"1.0.0"},"planId":{"$ref":"#/$defs/id"},"sourceFingerprint":{"type":"string","minLength":1},"createdAt":{"type":"string","format":"date-time"},
+    "occurrences":{"type":"object","additionalProperties":{"type":"object","additionalProperties":false,"required":["status"],"properties":{"status":{"enum":["pending","completed","skipped","missed"]},"completedAt":{"type":"string","format":"date-time"},"note":{"type":"string"}}}},
+    "measurements":{"type":"object","additionalProperties":{"type":"array","items":{"type":"object","additionalProperties":false,"required":["value","at"],"properties":{"value":{"type":"number","minimum":0},"at":{"type":"string","format":"date-time"}}}}},
+    "checkpointSnapshots":{"type":"object","additionalProperties":{"type":"object"}},
+    "importHistory":{"type":"array","items":{"type":"object","additionalProperties":false,"required":["fingerprint","importedAt","action"],"properties":{"fingerprint":{"type":"string"},"importedAt":{"type":"string","format":"date-time"},"action":{"enum":["created","unchanged","plan-updated-progress-preserved"]}}}}
+  },
+  "$defs":{"id":{"type":"string","minLength":1,"maxLength":100,"pattern":"^[a-zA-Z0-9_-]+$"}}
+}
