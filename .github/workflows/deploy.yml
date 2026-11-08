@@ -31,6 +31,6 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
       - name: Build and publish
-        run: npm run deploy
+        run: npm run deploy -- --repo "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
