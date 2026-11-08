@@ -13,6 +13,17 @@ npm run dev
 
 Create a production build with `npm run build` and preview it with `npm run preview`.
 
+## Deploy to GitHub Pages
+
+The Vite base path is configured for this repository at `/myplanner/`. Push to
+`main` to automatically build and publish the site to the `gh-pages` branch, or
+run `npm run deploy` locally.
+
+To enable Pages for the repository, open **Settings → Pages**, choose **Deploy
+from a branch**, and select `gh-pages` and `/(root)`. After the first successful
+deployment, the site is available at
+`https://4nkit-dubey.github.io/myplanner/`.
+
 ## Project areas
 
 - `src/App.jsx` — responsive glassmorphic app shell and Overview, Monthly, Weekly, Daily, and Create Plan screens.
@@ -32,4 +43,3 @@ Plans are stored in browser local storage. The library supports multiple plans a
 ## Visual direction
 
 Dark glass surfaces, soft blur, quiet borders, and restrained mint, blue, and violet highlights. Layouts adapt to smaller screens and respect reduced-motion preferences.
-
