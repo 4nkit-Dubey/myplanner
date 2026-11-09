@@ -1,4 +1,4 @@
-import{s as y,u as f,R as e,r as c,I as t,a as v}from"./index-UnmIAZ3G.js";function b(){return`# MyPlanner — Universal AI Planning Master Prompt
+import{s as y,u as f,R as e,r as c,I as t,a as v}from"./index-aHaemHYf.js";function b(){return`# MyPlanner — Universal AI Planning Master Prompt
 
 **Version:** 1.0.0  
 **Purpose:** Generate realistic, personalized, actionable plans that can be imported into the MyPlanner application.  
