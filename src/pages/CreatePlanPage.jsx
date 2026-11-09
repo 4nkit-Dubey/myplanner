@@ -19,6 +19,15 @@ function CreatePlan({ onImport, onCreateFile }) {
       window.setTimeout(() => promptRef.current?.select(), 0);
     }
   }
+  function downloadPrompt() {
+    const blob = new Blob([PROMPT], { type: "text/markdown;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "myplanner-prompt.md";
+    link.click();
+    URL.revokeObjectURL(url);
+  }
   return (
     <div className="page-content create-content">
       <section className="create-hero glass-panel">
@@ -58,10 +67,19 @@ function CreatePlan({ onImport, onCreateFile }) {
             Take the MyPlanner prompt to an AI assistant to talk through your
             goals and shape a plan.
           </p>
-          <button className="button button-outline" onClick={copyPrompt}>
-            <Icon name={copied ? "check" : "copy"} size={16} />
-            {copied ? "Copied to clipboard" : "Copy MyPlanner prompt"}
-          </button>
+          <div className="prompt-actions">
+            <button className="button button-outline" onClick={copyPrompt}>
+              <Icon name={copied ? "check" : "copy"} size={16} />
+              {copied ? "Copied to clipboard" : "Copy MyPlanner prompt"}
+            </button>
+            <button
+              className="button button-outline"
+              onClick={downloadPrompt}
+            >
+              <Icon name="download" size={16} />
+              Download as .md
+            </button>
+          </div>
         </article>
         <article className="glass-card create-step">
           <div className="step-top">

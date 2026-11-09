@@ -354,6 +354,8 @@ button:disabled { opacity: .55; cursor: not-allowed; }
 .create-step h3 { margin-top: 7px; font-size: 13px; }
 .create-step p { margin: 8px 0 13px; color: #92a0ae; font-size: 9px; line-height: 1.7; }
 .create-step > .button { margin-top: auto; min-height: 34px; font-size: 9px; }
+.prompt-actions { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; margin-top: auto; }
+.prompt-actions .button { min-height: 34px; font-size: 9px; }
 .step-hint { display: flex; align-items: center; gap: 7px; margin-top: auto; padding-top: 6px; color: #8393a0; font-size: 8px; }
 .step-hint .live-dot { width: 5px; height: 5px; flex-basis: 5px; margin: 0; }
 .file-chip { display: flex; width: 100%; align-items: center; gap: 8px; margin-top: auto; padding: 8px; border: 1px solid rgba(206,226,244,.09); border-radius: 10px; background: rgba(255,255,255,.025); }
