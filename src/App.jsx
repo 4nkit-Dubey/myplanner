@@ -1,11 +1,11 @@
 import React, { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import AppLayout from "./layout/AppLayout.jsx";
+import OverviewPage from "./pages/OverviewPage.jsx";
 
 const CreatePlanPage = lazy(() => import("./pages/CreatePlanPage.jsx"));
 const DailyPage = lazy(() => import("./pages/DailyPage.jsx"));
 const MonthlyPage = lazy(() => import("./pages/MonthlyPage.jsx"));
-const OverviewPage = lazy(() => import("./pages/OverviewPage.jsx"));
 const WeeklyPage = lazy(() => import("./pages/WeeklyPage.jsx"));
 
 export default function App() {
