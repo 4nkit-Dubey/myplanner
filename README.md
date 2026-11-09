@@ -26,7 +26,11 @@ deployment, the site is available at
 
 ## Project areas
 
-- `src/App.jsx` — responsive glassmorphic app shell and Overview, Monthly, Weekly, Daily, and Create Plan screens.
+- `src/App.jsx` — hash-based routes for Overview (`#/`), Monthly (`#/monthly`), Weekly (`#/weekly`), Daily (`#/daily`), and Create Plan (`#/create`).
+- `src/pages/` — one module for each planner page.
+- `src/layout/` and `src/context/` — shared app shell, planner state, and page actions.
+- `src/components/PlannerUI.jsx` — reusable navigation, dialogs, and UI components.
+- `src/plannerView.js` — shared date and schedule helpers.
 - `src/appStore.js` — browser library, plan import/replacement, and registry persistence.
 - `src/masterPrompt.js` — copyable AI prompt with the plan schema embedded.
 - `src/io.js`, `src/semantic.js`, `src/progress.js`, `src/registry.js`, and `src/scheduler.js` — the verified foundation utilities.
