@@ -19,6 +19,9 @@ The Vite base path is configured for this repository at `/myplanner/`. Push to
 `main` to automatically build and publish the site to the `gh-pages` branch, or
 run `npm run deploy` locally.
 
+The app uses hash-based routes, for example `/#/weekly`. GitHub Pages also
+redirects clean paths such as `/weekly` to their corresponding hash route.
+
 To enable Pages for the repository, open **Settings → Pages**, choose **Deploy
 from a branch**, and select `gh-pages` and `/(root)`. After the first successful
 deployment, the site is available at
